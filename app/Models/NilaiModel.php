@@ -36,39 +36,39 @@ class NilaiModel extends Model
     {
         $b = $this->builder();
         $this->builder()->where('nis', $nis);
-        $b->select('matkul.mkode, matkul.nama as nama_matkul, nilai, sks, semester');
-        $b->join('matkul', 'matkul.mkode = nilai.mkode');
+        $b->select('pelajaran.mkode, pelajaran.nama as nama_pelajaran, nilai, sks, semester');
+        $b->join('pelajaran', 'pelajaran.mkode = nilai.mkode');
         return $this;
     }
 
-    public function withKelasMatkul($id)
+    public function withKelasPelajaran($id)
     {
         $b = $this->builder();
         if ($id) {
             $id = explode(',', $id);
             if ($id[0] ?? '') {
-                $this->builder()->where('thn_masuk', $id[0]);
+                $this->builder()->where('angkatan', $id[0]);
             }
             if ($id[1] ?? '') {
                 $this->builder()->where('kelas', $id[1]);
             }
             if ($id[2] ?? '') {
-                $this->builder()->where('matkul.mkode', $id[2]);
+                $this->builder()->where('pelajaran.mkode', $id[2]);
             }
         }
-        $b->select('kelas, thn_masuk, siswa.nis, matkul.mkode, matkul.nama as nama_matkul, siswa.nama as nama_siswa, nilai');
-        $b->join('matkul', 'matkul.mkode = nilai.mkode');
+        $b->select('kelas, angkatan, siswa.nis, pelajaran.mkode, pelajaran.nama as nama_pelajaran, siswa.nama as nama_siswa, nilai');
+        $b->join('pelajaran', 'pelajaran.mkode = nilai.mkode');
         $b->join('siswa', 'siswa.nis = nilai.nis');
         return $this;
     }
-    public function allKelasMatkul()
+    public function allKelasPelajaran()
     {
         $b = $this->builder();
-        $b->select('kelas, thn_masuk, matkul.mkode, matkul.nama as nama_matkul, COUNT(1) as total, COUNT(nilai) as terisi');
-        $b->join('matkul', 'matkul.mkode = nilai.mkode');
+        $b->select('kelas, angkatan, pelajaran.mkode, pelajaran.nama as nama_pelajaran, COUNT(1) as total, COUNT(nilai) as terisi');
+        $b->join('pelajaran', 'pelajaran.mkode = nilai.mkode');
         $b->join('siswa', 'siswa.nis = nilai.nis');
-        $b->groupBy('kelas, thn_masuk, periode, mkode');
-        $b->orderBy('thn_masuk, kelas');
+        $b->groupBy('kelas, angkatan, periode, mkode');
+        $b->orderBy('angkatan, kelas');
         return $b->get()->getResult($this->returnType);
     }
 

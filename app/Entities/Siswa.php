@@ -10,17 +10,15 @@ use Config\Services;
  * @property string $nisn
  * @property string $nama
  * @property string $kelas
- * @property string $password
- * @property string $tmp_lahir
- * @property string $tgl_lahir
- * @property string $tugas_akhir
- * @property int $thn_masuk
+ * @property SiswaBiodata $biodata
+ * @property int $angkatan
  */
 class Siswa extends Entity
 {
     protected $casts = [
         'nis' => 'integer',
-        'thn_masuk' => 'integer',
+        'angkatan' => 'integer',
+        'biodata' => 'json',
     ];
 
     public function getKelasFull()
@@ -30,6 +28,26 @@ class Siswa extends Entity
 
     public function getSemester()
     {
-        return (floor(Services::config()->periode / 10) - $this->thn_masuk) * 2 + Services::config()->periode % 10;
+        return (floor(Services::config()->periode / 10) - $this->angkatan) * 2 + Services::config()->periode % 10;
     }
+}
+
+/**
+ * @property string $tempat_lahir
+ * @property string $tanggal_lahir
+ * @property string $kelamin
+ * @property string $agama
+ * @property string $status_keluarga
+ * @property string $anak_ke
+ * @property string $alamat
+ * @property string $asal_sekolah
+ * @property string $nama_ayah
+ * @property string $pekerjaan_ayah
+ * @property string $nama_ibu
+ * @property string $pekerjaan_ibu
+ * @property string $nama_wali
+ * @property string $pekerjaan_wali
+ */
+class SiswaBiodata
+{
 }

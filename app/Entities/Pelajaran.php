@@ -7,14 +7,13 @@ use CodeIgniter\Entity;
 /**
  * @property int $mkode
  * @property string $nama
- * @property int $sks
- * @property int $semester
+ * @property string $sifat
+ * @property int $kkm
  */
-class Matkul extends Entity
+class Pelajaran extends Entity
 {
     protected $casts = [
         'mkode' => 'integer',
-        'sks' => 'integer',
-        'semester' => 'integer',
+        'kkm' => 'integer',
     ];
 }

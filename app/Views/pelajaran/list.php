@@ -11,9 +11,9 @@
         <div class="card">
           <div class="card-body">
             <?= view('shared/rows') ?>
-            <?php /** @var \App\Entities\Matkul[] $data */ ?>
+            <?php /** @var \App\Entities\Pelajaran[] $data */ ?>
             <div class="d-flex">
-              <h1>Data Matkul</h1>
+              <h1>Data Pelajaran</h1>
               <div class="ml-auto">
                 <?= view('shared/button', [
                   'actions' => ['import', 'export'],
@@ -25,18 +25,18 @@
             <?= view('shared/table', [
               'data' => $data,
               'columns' => [
-                'Kode' => function (\App\Entities\Matkul $x) {
+                'Kode' => function (\App\Entities\Pelajaran $x) {
                   return $x->mkode;
                 },
-                'Nama' => function (\App\Entities\Matkul $x) {
+                'Nama' => function (\App\Entities\Pelajaran $x) {
                   return $x->nama;
                 },
-                'SKS' => function (\App\Entities\Matkul $x) {
-                  return $x->sks;
+                'Sifat' => function (\App\Entities\Pelajaran $x) {
+                  return ucfirst($x->sifat);
                 },
-                'Semester' => function (\App\Entities\Matkul $x) {
-                  return $x->semester;
-                }
+                'KKM' => function (\App\Entities\Pelajaran $x) {
+                  return $x->kkm;
+                },
               ]
             ]) ?>
             <?= view('shared/pagination') ?>

@@ -12,11 +12,11 @@
           <div class="card-body">
             <?php /** @var \App\Entities\Nilai[] $data */ ?>
             <div class="d-flex">
-              <h1>Data Nilai <?= get_kelas_matkul_nice_name($kelas_matkul) ?></h1>
+              <h1>Data Nilai <?= get_kelas_pelajaran_nice_name($kelas_pelajaran) ?></h1>
               <div class="ml-auto">
                 <?= view('shared/button', [
                   'actions' => ['import', 'export'],
-                  'target' => $kelas_matkul,
+                  'target' => $kelas_pelajaran,
                   'size' => 'btn-lg'
                 ]); ?>
               </div>

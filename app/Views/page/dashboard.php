@@ -9,7 +9,7 @@
       <div class="container" style="max-width: 720px;">
         <div class="card">
           <div class="card-body text-center">
-            <h1 class="mb-4">Selamat Datang di Portal Nilai Prodistik MAN 4 Jombang!</h1>
+            <h1 class="mb-4">Selamat Datang di Portal Nilai SDIT Ar-Ruhul Jadid!</h1>
             <div class="btn-group btn-block">
               <a href="/user/nilai/" class="btn btn-outline-primary py-4">
                 <i class="fas fa-2x fa-info"></i><br>
@@ -20,9 +20,9 @@
                   <i class="fas fa-2x fa-info"></i><br>
                   Input Siswa
                 </a>
-                <a href="/user/matkul/" class="btn btn-outline-primary py-4">
+                <a href="/user/pelajaran/" class="btn btn-outline-primary py-4">
                   <i class="fas fa-2x fa-info"></i><br>
-                  Input Matkul
+                  Input Pelajaran
                 </a>
               <?php endif ?>
             </div>

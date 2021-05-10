@@ -24,8 +24,8 @@
             <?= view('shared/table', [
               'data' => $data,
               'columns' => [
-                'Matkul' => function (\App\Entities\Nilai $x) {
-                  return $x->nama_matkul;
+                'Pelajaran' => function (\App\Entities\Nilai $x) {
+                  return $x->nama_pelajaran;
                 },
                 'Kelas' => function (\App\Entities\Nilai $x) {
                   return get_kelas_nice_name($x);
@@ -39,7 +39,7 @@
                 'Download' => function (\App\Entities\Nilai $x) {
                   return view('shared/button', [
                     'actions' => ['detail', 'export'],
-                    'target' => $x->thn_masuk . ',' . $x->kelas . ',' . $x->mkode,
+                    'target' => $x->angkatan . ',' . $x->kelas . ',' . $x->mkode,
                     'size' => 'btn-sm'
                   ]);;
                 },

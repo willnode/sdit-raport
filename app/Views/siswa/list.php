@@ -34,7 +34,7 @@
                 'Action' => function (\App\Entities\Siswa $x) {
                   return view('shared/button', [
                     'actions' => ['detail', 'export'],
-                    'target' => $x->thn_masuk . ',' . $x->kelas,
+                    'target' => $x->angkatan . ',' . $x->kelas,
                     'size' => 'btn-sm'
                   ]);
                 }

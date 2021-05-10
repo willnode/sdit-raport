@@ -5,14 +5,14 @@ namespace App\Models;
 use CodeIgniter\Model;
 use Config\Services;
 
-class MatkulModel extends Model
+class PelajaranModel extends Model
 {
-    protected $table         = 'matkul';
+    protected $table         = 'pelajaran';
     protected $allowedFields = [
-        'mkode', 'nama', 'sks', 'semester'
+        'mkode', 'nama', 'sifat', 'kkm'
     ];
     protected $primaryKey = 'mkode';
-    protected $returnType = 'App\Entities\Matkul';
+    protected $returnType = 'App\Entities\Pelajaran';
 
     public function withAktif()
     {

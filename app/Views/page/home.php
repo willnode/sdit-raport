@@ -10,7 +10,7 @@
         <div class="row gutter-0">
           <div class="col-lg-4 p-4 d-flex flex-column justify-content-center">
             <h2>Raport Prodistik</h2>
-            <p>Pangkalan Data Raport Prodistik MAN 4 Jombang</p>
+            <p>Pangkalan Data Raport SDIT Ar-Ruhul Jadid</p>
             <div><a href="/cek/" class="btn mb-3 bg-gradient-navy">Cek Nilai Siswa</a></div>
             <div><a href="/login/" class="btn mb-3 bg-gradient-navy">Masuk (Guru)</a></div>
           </div>

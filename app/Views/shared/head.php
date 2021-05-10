@@ -2,8 +2,8 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $meta_title = esc($item->title ?? $title ?? 'MAN 4 Jombang') ?></title>
-    <meta name="description" content="<?= $meta_desc = esc($item->description ?? $description ?? 'Raport Prodistik MAN 4 Jombang') ?>">
+    <title><?= $meta_title = esc($item->title ?? $title ?? 'SDIT Ar-Ruhul Jadid') ?></title>
+    <meta name="description" content="<?= $meta_desc = esc($item->description ?? $description ?? 'Raport SDIT Ar-Ruhul Jadid') ?>">
     <meta name="og:title" content="<?= $meta_title ?>" />
     <meta name="og:description" content="<?= $meta_desc ?>" />
     <meta name="og:image" content="<?= esc($item->image_url ?? '') ?>" />

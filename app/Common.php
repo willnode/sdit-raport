@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\MatkulModel;
+use App\Models\PelajaranModel;
 use CodeIgniter\Entity;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use Config\Services;
@@ -99,12 +99,12 @@ function get_kelas_nice_name($x)
     if (is_string($x)) {
         $x = explode(',', $x);
         return get_kelas_nice_name((object)[
-            'thn_masuk' => $x[0] ?? 0,
+            'angkatan' => $x[0] ?? 0,
             'kelas' => $x[1] ?? 0,
         ]);
     }
     $k = '';
-    switch (Services::config()->tahun - $x->thn_masuk) {
+    switch (Services::config()->tahun - $x->angkatan) {
         case 0:
             $k = 'X ';
             break;
@@ -115,7 +115,7 @@ function get_kelas_nice_name($x)
             $k = 'XII ';
             break;
         default:
-            $k = 'Alumni '.$x->thn_masuk.' ';
+            $k = 'Alumni '.$x->angkatan.' ';
             break;
     }
     switch ($x->kelas[0] ?? '') {
@@ -139,11 +139,11 @@ function get_kelas_nice_name($x)
     return $k;
 }
 
-function get_kelas_matkul_nice_name($x)
+function get_kelas_pelajaran_nice_name($x)
 {
     $x = explode(',', $x);
     return get_kelas_nice_name((object)[
-        'thn_masuk' => $x[0] ?? '',
+        'angkatan' => $x[0] ?? '',
         'kelas' => $x[1] ?? '',
-    ]) . '-' . ((new MatkulModel)->find($x[2] ?? '')->nama ?? '');
+    ]) . '-' . ((new PelajaranModel)->find($x[2] ?? '')->nama ?? '');
 }

@@ -34,7 +34,7 @@
                   return $x->kelasFull;
                 },
                 'Thn Masuk' => function (\App\Entities\Siswa $x) {
-                  return $x->thn_masuk;
+                  return $x->angkatan;
                 },
                 'Action' => function (\App\Entities\Siswa $x) {
                   return view('shared/button', [

@@ -28,7 +28,7 @@
   <!-- Brand Logo -->
   <a href="/" class="brand-link">
     <img src="/logo_dark.png" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
-    <span class="brand-text font-weight-light">MAN 4 Jombang</span>
+    <span class="brand-text font-weight-light">SDIT Ar-Ruhul Jadid</span>
   </a>
 
   <!-- Sidebar -->
@@ -72,10 +72,10 @@
         </li>
         <?php if (\Config\Services::login()->role === 'admin') : ?>
           <li class="nav-item">
-            <a href="/user/matkul/" class="nav-link <?= ($page ?? '') === 'matkul' ? 'active' : '' ?>">
+            <a href="/user/pelajaran/" class="nav-link <?= ($page ?? '') === 'pelajaran' ? 'active' : '' ?>">
               <i class="nav-icon fas fa-scroll"></i>
               <p>
-                Data Matkul
+                Data Pelajaran
               </p>
             </a>
           </li>

@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Entities\Siswa as EntitiesSiswa;
-use App\Libraries\MatkulProcessor;
+use App\Libraries\PelajaranProcessor;
 use App\Libraries\NilaiProcessor;
 use App\Models\NilaiModel;
 use App\Models\SiswaModel;

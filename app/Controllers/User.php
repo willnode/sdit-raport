@@ -2,11 +2,12 @@
 
 namespace App\Controllers;
 
+use App\Entities\Config;
 use App\Entities\User as EntitiesUser;
-use App\Libraries\MatkulProcessor;
+use App\Libraries\PelajaranProcessor;
 use App\Libraries\NilaiProcessor;
 use App\Libraries\SiswaProcessor;
-use App\Models\MatkulModel;
+use App\Models\PelajaranModel;
 use App\Models\NilaiModel;
 use App\Models\SiswaModel;
 use App\Models\UserModel;
@@ -115,21 +116,22 @@ class User extends BaseController
 			case 'list':
 				if ($k = $this->request->getGet('detail')) {
 					return view('nilai/detail', [
-						'data' => (new NilaiModel())->withKelasMatkul($k)->findAll(),
+						'data' => (new NilaiModel())->withKelasPelajaran($k)->findAll(),
 						'page' => 'nilai',
-						'kelas_matkul' => $k,
+						'kelas_pelajaran' => $k,
 					]);
 				}
 				return view('nilai/list', [
 					'data' => (new NilaiModel())->where([
 						'periode' => Services::config()->periode,
-					])->allKelasMatkul(),
+					])->allKelasPelajaran(),
 					'page' => 'nilai',
 				]);
 			case 'set':
 				if ($this->request->getMethod() === 'post') {
 					if ($p = $this->request->getPost('periode')) {
-						Database::connect()->table('config')->update(['periode' => $p], ['id' => Services::config()->id]);
+						Config::get()->periode = $p;
+						Config::get()->save();
 						(new NilaiProcessor)->synchronize($p);
 					}
 					return $this->response->redirect('/user/nilai/');
@@ -142,8 +144,8 @@ class User extends BaseController
 			case 'detail':
 				return $this->response->redirect('/user/nilai/?detail=' . $id);
 			case 'export':
-				set_excel_header('Nilai-' . ($id ? get_kelas_matkul_nice_name($id) : 'All'));
-				(new NilaiProcessor)->export((new NilaiModel())->withKelasMatkul($id)->findAll())->save('php://output');
+				set_excel_header('Nilai-' . ($id ? get_kelas_pelajaran_nice_name($id) : 'All'));
+				(new NilaiProcessor)->export((new NilaiModel())->withKelasPelajaran($id)->findAll())->save('php://output');
 				exit;
 			case 'import':
 				if ($this->request->getMethod() == 'post') {
@@ -157,25 +159,25 @@ class User extends BaseController
 		}
 	}
 
-	public function matkul($page = 'list')
+	public function pelajaran($page = 'list')
 	{
 		switch ($page) {
 			case 'list':
-				return view('matkul/list', [
-					'data' => (new MatkulModel())->findAll(),
-					'page' => 'matkul',
+				return view('pelajaran/list', [
+					'data' => (new PelajaranModel())->findAll(),
+					'page' => 'pelajaran',
 				]);
 			case 'export':
-				set_excel_header('matkul-all');
-				(new MatkulProcessor)->export((new MatkulModel())->findAll())->save('php://output');
+				set_excel_header('pelajaran-all');
+				(new PelajaranProcessor)->export((new PelajaranModel())->findAll())->save('php://output');
 				exit;
 			case 'import':
 				if ($this->request->getMethod() == 'post') {
-					$c = (new MatkulProcessor)->import($this->request->getFile('file'));
+					$c = (new PelajaranProcessor)->import($this->request->getFile('file'));
 					return $this->response->redirect("../?success_rows=$c");
 				} else {
 					return view('page/upload', [
-						'page' => 'matkul',
+						'page' => 'pelajaran',
 					]);
 				}
 		}
@@ -187,10 +189,10 @@ class User extends BaseController
 			$nilaim = (new NilaiModel);
 			$siswam = (new SiswaModel);
 			if ($_GET['kelas']) {
-				$nilaim->withKelasMatkul($_GET['kelas']);
+				$nilaim->withKelasPelajaran($_GET['kelas']);
 				$siswam->withKelas($_GET['kelas']);
 			}
-			$matkul = (new MatkulModel())->findAll();
+			$pelajaran = (new PelajaranModel())->findAll();
 			$nilai = $nilaim->asLeger();
 			$siswa = $siswam->findAll();
 		}
@@ -199,13 +201,13 @@ class User extends BaseController
 				return view('leger/view', [
 					'page' => 'leger',
 					'kelas' => (new SiswaModel)->allKelas(),
-					'matkul' => $matkul ?? null,
+					'pelajaran' => $pelajaran ?? null,
 					'siswa' => $siswa ?? null,
 					'nilai' => $nilai ?? null,
 				]);
 			case 'export':
 				set_excel_header('Leger-' . (isset($_GET['kelas']) ? get_kelas_nice_name($_GET['kelas']) : 'All'));
-				(new NilaiProcessor)->exportLeger((new SiswaModel)->allKelas(), $matkul ?? null, $siswa ?? null, $nilai ?? null)->save('php://output');
+				(new NilaiProcessor)->exportLeger((new SiswaModel)->allKelas(), $pelajaran ?? null, $siswa ?? null, $nilai ?? null)->save('php://output');
 				exit;
 		}
 	}

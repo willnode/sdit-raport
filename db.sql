@@ -20,8 +20,8 @@ CREATE TABLE IF NOT EXISTS `config` (
 
 -- Data exporting was unselected.
 
--- Dumping structure for table prodistikdenanyar_db.matkul
-CREATE TABLE IF NOT EXISTS `matkul` (
+-- Dumping structure for table prodistikdenanyar_db.pelajaran
+CREATE TABLE IF NOT EXISTS `pelajaran` (
   `mkode` int(11) NOT NULL AUTO_INCREMENT,
   `nama` varchar(50) DEFAULT NULL,
   `sks` int(11) DEFAULT NULL,
@@ -41,8 +41,8 @@ CREATE TABLE IF NOT EXISTS `nilai` (
   `periode` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nis_mkode` (`nis`,`mkode`),
-  KEY `FK_nilai_matkul` (`mkode`),
-  CONSTRAINT `FK_nilai_matkul` FOREIGN KEY (`mkode`) REFERENCES `matkul` (`mkode`),
+  KEY `FK_nilai_pelajaran` (`mkode`),
+  CONSTRAINT `FK_nilai_pelajaran` FOREIGN KEY (`mkode`) REFERENCES `pelajaran` (`mkode`),
   CONSTRAINT `FK_nilai_siswa` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `siswa` (
   `nisn` varchar(50) DEFAULT NULL,
   `nama` varchar(255) DEFAULT NULL,
   `kelas` varchar(50) DEFAULT NULL,
-  `thn_masuk` int(11) DEFAULT NULL,
+  `angkatan` int(11) DEFAULT NULL,
   `tugas_akhir` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`nis`),
   KEY `kelas` (`kelas`)

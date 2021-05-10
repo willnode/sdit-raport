@@ -9,7 +9,7 @@ class SiswaModel extends Model
 {
     protected $table         = 'siswa';
     protected $allowedFields = [
-        'nis', 'nama', 'kelas', 'nisn', 'tugas_akhir', 'thn_masuk', 'password'
+        'nis', 'nama', 'kelas', 'nisn', 'tugas_akhir', 'angkatan', 'password'
     ];
     protected $primaryKey = 'nis';
     protected $returnType = 'App\Entities\Siswa';
@@ -18,7 +18,7 @@ class SiswaModel extends Model
     {
         $b = $this->builder();
         $y = Services::config()->tahun;
-        $b->where('thn_masuk between ' . ($y - 2) . ' and ' . $y);
+        $b->where('angkatan between ' . ($y - 2) . ' and ' . $y);
         return $this;
         # code...
     }
@@ -27,12 +27,12 @@ class SiswaModel extends Model
         if ($id) {
             $id = explode(',', $id);
             if ($id[0] ?? '') {
-                $this->builder()->where('thn_masuk', $id[0]);
+                $this->builder()->where('angkatan', $id[0]);
             }
             if ($id[1] ?? '') {
                 $this->builder()->where('kelas', $id[1]);
             }
-            $this->builder()->orderBy('thn_masuk, kelas');
+            $this->builder()->orderBy('angkatan, kelas');
         }
         return $this;
         # code...
@@ -40,9 +40,9 @@ class SiswaModel extends Model
     public function allKelas()
     {
         $b = $this->builder();
-        $b->select('kelas, thn_masuk, COUNT(nis) as jumlah');
-        $b->groupBy('kelas, thn_masuk');
-        $b->orderBy('thn_masuk, kelas');
+        $b->select('kelas, angkatan, COUNT(nis) as jumlah');
+        $b->groupBy('kelas, angkatan');
+        $b->orderBy('angkatan, kelas');
         return $b->get()->getResult($this->returnType);
     }
 

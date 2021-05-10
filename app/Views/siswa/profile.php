@@ -101,7 +101,7 @@
                     <?php foreach ($ss->nilai as $n) : ?>
                       <tr>
                         <td>
-                          <?= esc($n->nama_matkul) ?>
+                          <?= esc($n->nama_pelajaran) ?>
                         </td>
                         <td>
                           <?= esc($n->sks) ?> SKS

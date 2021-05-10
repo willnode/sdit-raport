@@ -2,10 +2,10 @@
 
 namespace App\Libraries;
 
-use App\Entities\Matkul;
+use App\Entities\Pelajaran;
 use App\Entities\Nilai;
 use App\Entities\Siswa;
-use App\Models\MatkulModel;
+use App\Models\PelajaranModel;
 use App\Models\NilaiModel;
 use App\Models\SiswaModel;
 use CodeIgniter\Files\File;
@@ -28,7 +28,7 @@ class NilaiProcessor
             if (!($excel = IOFactory::load($file->getRealPath()))) {
                 throw new Exception("Can't read data");
             }
-            // ['Kode Matkul', 'Nama Matkul', 'NIS', 'Nama', 'Nilai']
+            // ['Kode Pelajaran', 'Nama Pelajaran', 'NIS', 'Nama', 'Nilai']
             $data = $excel->getSheet(0)->toArray();
             $excel->disconnectWorksheets();
             $excel->garbageCollect();
@@ -66,13 +66,13 @@ class NilaiProcessor
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         /* header */
-        foreach (['Kode Matkul', 'Nama Matkul', 'NIS', 'Nama', 'Nilai'] as $key => $value) {
+        foreach (['Kode Pelajaran', 'Nama Pelajaran', 'NIS', 'Nama', 'Nilai'] as $key => $value) {
             $sheet->getCellByColumnAndRow($key + 1, 1)->setValue($value);
             $spreadsheet->getActiveSheet()->getColumnDimensionByColumn($key + 1)->setAutoSize(true);
         }
         foreach ($data as $i => $nilai) {
             $sheet->getCellByColumnAndRow(1, $i + 2)->setValue($nilai->mkode);
-            $sheet->getCellByColumnAndRow(2, $i + 2)->setValue($nilai->nama_matkul);
+            $sheet->getCellByColumnAndRow(2, $i + 2)->setValue($nilai->nama_pelajaran);
             $sheet->getCellByColumnAndRow(3, $i + 2)->setValue($nilai->nis);
             $sheet->getCellByColumnAndRow(4, $i + 2)->setValue($nilai->nama_siswa);
             $sheet->getCellByColumnAndRow(5, $i + 2)->setValue($nilai->nilai);
@@ -81,7 +81,7 @@ class NilaiProcessor
         return new Xlsx($spreadsheet);
     }
 
-    public function exportLeger($kelas, $matkul, $siswa, $nilai)
+    public function exportLeger($kelas, $pelajaran, $siswa, $nilai)
     {
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -90,19 +90,19 @@ class NilaiProcessor
             $sheet->getCellByColumnAndRow($key + 1, 1)->setValue($value);
             $spreadsheet->getActiveSheet()->getColumnDimensionByColumn($key + 1)->setAutoSize(true);
         }
-        foreach ($matkul as $key => $m) {
+        foreach ($pelajaran as $key => $m) {
             $sheet->getCellByColumnAndRow($key + 1 + 4, 1)->setValue($m->nama);
             $spreadsheet->getActiveSheet()->getColumnDimensionByColumn($key + 1 + 4)->setAutoSize(true);
         }
-        $sheet->getCellByColumnAndRow($key + 1 + 4 + count($matkul), 1)->setValue('NA');
-        $spreadsheet->getActiveSheet()->getColumnDimensionByColumn($key + 1 + 4 + count($matkul))->setAutoSize(true);
+        $sheet->getCellByColumnAndRow($key + 1 + 4 + count($pelajaran), 1)->setValue('NA');
+        $spreadsheet->getActiveSheet()->getColumnDimensionByColumn($key + 1 + 4 + count($pelajaran))->setAutoSize(true);
 
         foreach ($siswa as $i => $s) {
             $sheet->getCellByColumnAndRow(1, $i + 2)->setValue($i + 1);
             $sheet->getCellByColumnAndRow(2, $i + 2)->setValue($s->nis);
             $sheet->getCellByColumnAndRow(3, $i + 2)->setValue($s->nama);
             $sheet->getCellByColumnAndRow(4, $i + 2)->setValue($s->kelasFull);
-            foreach ($matkul as $im => $m) {
+            foreach ($pelajaran as $im => $m) {
                 $sheet->getCellByColumnAndRow(5 + $im, $i + 2)->setValue($nilai[$s->nis][$m->mkode] ?? '');
             }
         }
@@ -116,14 +116,14 @@ class NilaiProcessor
         $tahun = Services::config()->tahun;
         /** @var Siswa[] $siswa */
         $siswa = (new SiswaModel)->withAktif()->findAll();
-        /** @var Matkul[] $matkul */
-        $matkul = (new MatkulModel)->withAktif()->findAll();
+        /** @var Pelajaran[] $pelajaran */
+        $pelajaran = (new PelajaranModel)->withAktif()->findAll();
         $db = Database::connect();
         $t = $db->table('nilai');
         $data = [];
         foreach ($siswa as $s) {
-            foreach ($matkul as $m) {
-                if (floor(($m->semester - 1) / 2) == ($tahun - $s->thn_masuk)) {
+            foreach ($pelajaran as $m) {
+                if (floor(($m->semester - 1) / 2) == ($tahun - $s->angkatan)) {
                     $data[] = [
                         'nis' => $s->nis,
                         'mkode' => $m->mkode,
@@ -183,7 +183,7 @@ class NilaiProcessor
         foreach ($n->semester as &$v) {
             foreach ($v->nilai as $vv) {
                 $v->sum += $vv->nilai;
-                $v->sks += $vv->sks ?? $vv->matkul->sks;
+                $v->sks += $vv->sks ?? $vv->pelajaran->sks;
             }
             $v->ips = $v->sum / $v->sks;
             $v->abjad = static::toAbjad($v->ips);

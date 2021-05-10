@@ -19,7 +19,7 @@
                   <li>Hanya sheet pertama yang akan diproses.</li>
                   <li>Baris pertama tidak akan diproses.</li>
                   <li>Untuk format Excel yang dipakai mohon gunakan format sesuai file download pada data yang ingin diedit.</li>
-                  <li>Data yang diedit mengacu pada kode matkul / NIS di tiap baris data excel. Untuk input nilai, perubahan pada nama matkul/siswa dalam Excel tidak akan merubah data.</li>
+                  <li>Data yang diedit mengacu pada kode pelajaran / NIS di tiap baris data excel. Untuk input nilai, perubahan pada nama pelajaran/siswa dalam Excel tidak akan merubah data.</li>
                   <li>Tidak ada penghapusan data apabila ada input data yang kurang dalam excel, sehingga tidak masalah apabila hanya mengupload sebagian data saja.</li>
                 </ul>
               </div>

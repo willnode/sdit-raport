@@ -29,7 +29,7 @@
           <div class="card-body">
             <?php
             /**
-             * @var \App\Entities\Matkul[] $matkul
+             * @var \App\Entities\Pelajaran[] $pelajaran
              * @var \App\Entities\Nilai[][] $nilai
              * @var \App\Entities\Siswa[] $siswa
              */
@@ -38,8 +38,8 @@
               <select name="kelas" class="form-control">
                 <option value="">Semua Kelas</option>
                 <?= implode('', array_map(function ($x) {
-                  return '<option ' . (($_GET['kelas'] ?? '') === $x->thn_masuk . ',' . $x->kelas ? 'selected' : '') .
-                    ' value="' . $x->thn_masuk . ',' . $x->kelas . '">' . $x->kelasFull . '</option>';
+                  return '<option ' . (($_GET['kelas'] ?? '') === $x->angkatan . ',' . $x->kelas ? 'selected' : '') .
+                    ' value="' . $x->angkatan . ',' . $x->kelas . '">' . $x->kelasFull . '</option>';
                 }, $kelas)) ?>
               </select>
               <input type="submit" value="Lihat" class="mx-2 btn btn-primary">
@@ -54,7 +54,7 @@
                       <th>NIS</th>
                       <th>Nama</th>
                       <th>Kelas</th>
-                      <?php foreach ($matkul as $m) : ?>
+                      <?php foreach ($pelajaran as $m) : ?>
                         <th class="rotated-text">
                           <div><span><?= esc($m->nama) ?></span></div>
                         </th>
@@ -72,7 +72,7 @@
                         <td><?= esc($s->nama) ?></td>
                         <td><?= $s->kelasFull ?></td>
 
-                        <?php foreach ($matkul as $m) : ?>
+                        <?php foreach ($pelajaran as $m) : ?>
                           <td><?= $nilai[$s->nis][$m->mkode] ?? '-' ?></td>
                         <?php endforeach ?>
                         <td>-</td>

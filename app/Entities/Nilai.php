@@ -3,7 +3,7 @@
 namespace App\Entities;
 
 use App\Libraries\NilaiProcessor;
-use App\Models\MatkulModel;
+use App\Models\PelajaranModel;
 use App\Models\SiswaModel;
 use CodeIgniter\Entity;
 
@@ -11,7 +11,7 @@ use CodeIgniter\Entity;
  * @property int $id
  * @property int $nis
  * @property Siswa $siswa
- * @property Matkul $matkul
+ * @property Pelajaran $pelajaran
  * @property int $mkode
  * @property int $nilai
  */
@@ -29,9 +29,9 @@ class Nilai extends Entity
         return (new SiswaModel())->find($this->nis);
     }
 
-    public function getMatkul()
+    public function getPelajaran()
     {
-        return (new MatkulModel())->find($this->mkode);
+        return (new PelajaranModel())->find($this->mkode);
     }
 
     public function getAbjad()

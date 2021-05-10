@@ -13,7 +13,7 @@
             <form enctype="multipart/form-data" method="post">
               <div class="d-flex mb-3">
                 <h1 class="h3 mb-0 mr-auto">Edit Siswa</h1>
-                <a href="/user/siswa/?detail=<?= $item->thn_masuk ?>,<?= $item->kelas ?>" class="btn btn-outline-secondary ml-2">Kembali</a>
+                <a href="/user/siswa/?detail=<?= $item->angkatan ?>,<?= $item->kelas ?>" class="btn btn-outline-secondary ml-2">Kembali</a>
               </div>
               <label class="d-block mb-3">
                 <span>NIS</span>
@@ -29,7 +29,7 @@
               </label>
               <label class="d-block mb-3">
                 <span>Tahun Masuk</span>
-                <input type="text" class="form-control" name="thn_masuk" value="<?= esc($item->thn_masuk) ?>">
+                <input type="text" class="form-control" name="angkatan" value="<?= esc($item->angkatan) ?>">
               </label>
               <label class="d-block mb-3">
                 <span>Tugas Akhir</span>

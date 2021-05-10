@@ -42,7 +42,7 @@
      */
     ?>
     <h1 class="text-center"><?= $s ? 'Kartu Hasil Nilai' : 'Nilai Transkrip Sementara' ?></h1>
-    <p class="text-center">Prodistik MAN 4 Jombang</p>
+    <p class="text-center">SDIT Ar-Ruhul Jadid</p>
     <hr>
     <h2 class="mb-3">Data Siswa</h2>
     <table>
@@ -61,7 +61,7 @@
         </tr>
         <tr>
           <td>Tahun Masuk</td>
-          <td><?= $siswa->thn_masuk ?></td>
+          <td><?= $siswa->angkatan ?></td>
         </tr>
       </tbody>
     </table>
@@ -93,7 +93,7 @@
                 <?= ++$i ?>
               </td>
               <td>
-                <?= esc($n->nama_matkul) ?>
+                <?= esc($n->nama_pelajaran) ?>
               </td>
               <td class="text-center">
                 <?= esc($n->sks) ?>
